@@ -18,7 +18,7 @@ class Buku {
         }
     }
 
-    public class ProjekPerpustakaanVelove {
+    public class ProjekPerpustakaan {
         static Scanner input = new Scanner(System.in);
         static Buku[] dataBuku = new Buku[100];
         static int jumlahData = 0;
