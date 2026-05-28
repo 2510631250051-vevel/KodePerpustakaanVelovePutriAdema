@@ -108,3 +108,98 @@ class Buku {
 
             } while (pilihan != 16);
         }
+
+static void isiDataAwal() {
+            dataBuku[jumlahData++] = new Buku( 1, "Algoritma dan Pemrograman", "Teknologi", 10);
+            dataBuku[jumlahData++] = new Buku( 2, "Struktur Data", "Teknologi", 8);
+            dataBuku[jumlahData++] = new Buku( 3, "Basis Data", "Teknologi", 12);
+            dataBuku[jumlahData++] = new Buku( 4, "Jaringan Komputer", "Teknologi", 7);
+            dataBuku[jumlahData++] = new Buku( 5, "Sistem Operasi", "Teknologi", 9);
+            dataBuku[jumlahData++] = new Buku( 6, "Pemrograman Java", "Teknologi", 15);
+            dataBuku[jumlahData++] = new Buku( 7, "Pemrograman Python", "Teknologi", 11);
+            dataBuku[jumlahData++] = new Buku( 8, "Machine Learning", "Teknologi", 6);
+            dataBuku[jumlahData++] = new Buku( 9, "Artificial Intelligence", "Teknologi", 5);
+            dataBuku[jumlahData++] = new Buku(10, "Data Mining", "Teknologi", 8);
+
+            dataBuku[jumlahData++] = new Buku(11, "Laskar Pelangi", "Novel", 20);
+            dataBuku[jumlahData++] = new Buku(12, "Bumi Manusia", "Novel", 14);
+            dataBuku[jumlahData++] = new Buku(13, "Ayat-Ayat Cinta", "Novel", 18);
+            dataBuku[jumlahData++] = new Buku(14, "Dilan 1990", "Novel", 22);
+            dataBuku[jumlahData++] = new Buku(15, "Perahu Kertas", "Novel", 16);
+
+            dataBuku[jumlahData++] = new Buku(16, "Sejarah Indonesia", "Sejarah", 13);
+            dataBuku[jumlahData++] = new Buku(17, "Sejarah Dunia", "Sejarah", 9);
+            dataBuku[jumlahData++] = new Buku(18, "Perang Dunia II", "Sejarah", 7);
+            dataBuku[jumlahData++] = new Buku(19, "Kerajaan Majapahit", "Sejarah", 10);
+            dataBuku[jumlahData++] = new Buku(20, "Kerajaan Sriwijaya", "Sejarah", 8);
+
+            dataBuku[jumlahData++] = new Buku(21, "Fisika Dasar", "Sains", 11);
+            dataBuku[jumlahData++] = new Buku(22, "Kimia Dasar", "Sains", 12);
+            dataBuku[jumlahData++] = new Buku(23, "Biologi Dasar", "Sains", 14);
+            dataBuku[jumlahData++] = new Buku(24, "Astronomi", "Sains", 6);
+            dataBuku[jumlahData++] = new Buku(25, "Geologi", "Sains", 5);
+
+            dataBuku[jumlahData++] = new Buku(26, "Manajemen Bisnis", "Ekonomi", 9);
+            dataBuku[jumlahData++] = new Buku(27, "Akuntansi Dasar", "Ekonomi", 10);
+            dataBuku[jumlahData++] = new Buku(28, "Ekonomi Mikro", "Ekonomi", 8);
+            dataBuku[jumlahData++] = new Buku(29, "Ekonomi Makro", "Ekonomi", 7);
+            dataBuku[jumlahData++] = new Buku(30, "Kewirausahaan", "Ekonomi", 12);
+        }
+
+static void tampilHeader() {
+        System.out.println("=================================================================================================");
+        System.out.printf("%-5s %-35s %-15s %-10s %-12s\n",
+                "ID", "Judul", "Kategori", "Stok", "Status");
+        System.out.println("=================================================================================================");
+    }
+
+    static void tampilBaris(Buku b) {
+        System.out.printf("%-5d %-35s %-5s %-10d %-12s\n",
+                b.id,
+                b.judul,
+                b.kategori,
+                b.stok,
+                b.status);
+    }
+
+        static void tambahBuku() {
+            System.out.println("\n=== TAMBAH DATA BUKU ===");
+
+            System.out.print("Masukan ID Buku: ");
+            int id = input.nextInt();
+            input.nextLine();
+
+            System.out.print("Masukan Judul Buku: ");
+            String judul = input.nextLine();
+
+            System.out.print("Masukan Kategori Buku: ");
+            String kategori = input.nextLine();
+
+            System.out.print("Masukan Stok Buku: ");
+            int stok = input.nextInt();
+            input.nextLine();
+
+            dataBuku[jumlahData++] = new Buku(id, judul, kategori, stok);
+
+            System.out.println("Data buku berhasil ditambahkan.");
+        }
+
+     static void tampilkanBuku() {
+    System.out.println("\n=== DAFTAR BUKU ===");
+
+    if (jumlahData == 0) {
+        System.out.println("Belum ada data buku.");
+        return;
+    }
+        tampilHeader();
+    for (int i = 0; i < jumlahData; i++) {
+        if (dataBuku[i].aktif == true) {
+
+            System.out.printf("%-5d %-35s %-15s %-10d %-12s\n",
+                    dataBuku[i].id,
+                    dataBuku[i].judul,
+                    dataBuku[i].kategori,
+                    dataBuku[i].stok,
+                    dataBuku[i].status);
+        }
+    }
