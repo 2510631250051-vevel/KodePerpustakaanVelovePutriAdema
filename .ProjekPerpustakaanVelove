@@ -1,0 +1,110 @@
+import java.util.Scanner;
+import java.io.*;
+class Buku {
+        int id;
+        String judul;
+        String kategori;
+        int stok;
+        boolean aktif;
+        String status;
+
+        Buku(int id, String judul, String kategori, int stok) {
+            this.id = id;
+            this.judul = judul;
+            this.kategori = kategori;
+            this.stok = stok;
+            this.aktif = true;
+            this.status = "tersedia";
+        }
+    }
+
+    public class ProjekPerpustakaanVelove {
+        static Scanner input = new Scanner(System.in);
+        static Buku[] dataBuku = new Buku[100];
+        static int jumlahData = 0;
+
+        public static void main(String[] args) {
+            isiDataAwal(); 
+
+            int pilihan;
+
+            do {
+                System.out.println("\n=== SISTEM MANAJEMEN PERPUSTAKAAN DIGITAL ===");
+                System.out.println("1. Tambah Data Buku");
+                System.out.println("2. Tampilkan Semua Buku");
+                System.out.println("3. Edit Data Buku Berdasarkan ID");
+                System.out.println("4. Hapus Data Buku Berdasarkan ID");
+                System.out.println("5. Cari buku berdasarkan nama (Linear Search)");
+                System.out.println("6. Cari buku berdasarkan ID (Binary Search");
+                System.out.println("7. Cari buku berdasarkan kategori");
+                System.out.println("8. Urutkan buku berdasarkan ID");
+                System.out.println("9. urutkan buku berdasarkan judul (Alphabetical)");
+                System.out.println("10.Urutkan buku berdasarkan stok ");
+                System.out.println("11.Update Status buku (Dipinjam/tersedia)");
+                System.out.println("12.Status ketersediaan buku ");
+                System.out.println("13 statistik data buku ");
+                System.out.println("14. Save Data Buku");
+                System.out.println("15. Load Data Buku");
+                System.out.println("16. Keluar");
+
+                System.out.print("Pilih menu:");
+
+                pilihan = input.nextInt();
+                input.nextLine();
+
+                switch (pilihan) {
+                    case 1:
+                        tambahBuku();
+                        break;
+                    case 2:
+                        tampilkanBuku();
+                        break;
+                    case 3:
+                        editBuku();
+                        break;
+                    case 4:
+                        hapusBuku();
+                        break;
+                    case 5:
+                        cariBukuLin();
+                        break;
+                    case 6:
+                        cariBukubin();
+                        break;
+                    case 7:
+                        cariKategori();
+                        break;
+                    case 8:
+                        bubbleSortid();
+                        break;
+                    case 9:
+                        selectionSortJudul();
+                        break;
+                    case 10:
+                        bubbleSortStok();
+                        break;
+                    case 11:
+                        updateStatus();
+                        break;
+                    case 12:
+                        counterBuku();
+                        break;
+                    case 13:
+                        statistikData();
+                        break;
+                    case 14:
+                        saveData();
+                        break;
+                    case 15:
+                        loadData();
+                        break;
+                    case 16:
+                        System.out.println("Program selesai, Terima Kasih.");
+                        break;
+
+                    default:
+                        System.out.println("Pilihan tidak valid.");
+                }
+
+            } while (pilihan != 16);
+        }
