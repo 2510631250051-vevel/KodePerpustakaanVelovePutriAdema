@@ -203,3 +203,143 @@ static void tampilHeader() {
                     dataBuku[i].status);
         }
     }
+
+        System.out.println("=====================================================================================================");
+}
+
+    static void editBuku() {
+        System.out.println("\n=== EDIT DATA BUKU ===");
+
+        System.out.print("Masukkan ID Buku: ");
+        int id = input.nextInt();
+        input.nextLine();
+
+        for (int i = 0; i < jumlahData; i++) {
+            if (dataBuku[i].id == id && dataBuku[i].aktif == true) {
+                System.out.print("Judul Baru: ");
+                dataBuku[i].judul = input.nextLine();
+
+                System.out.print("Kategori Baru: ");
+                dataBuku[i].kategori = input.nextLine();
+
+                System.out.print("Stok Baru: ");
+                dataBuku[i].stok = input.nextInt();
+                input.nextLine();
+
+                System.out.println("Data berhasil diedit.");
+                return;
+            }
+        }
+
+        System.out.println("Data tidak ditemukan.");
+    }
+
+    static void hapusBuku() {
+        System.out.println("\n=== HAPUS DATA BUKU ===");
+
+        System.out.print("Masukkan ID Buku: ");
+        int id = input.nextInt();
+        input.nextLine();
+
+        for (int i = 0; i < jumlahData; i++) {
+            if (dataBuku[i].id == id && dataBuku[i].aktif == true) {
+                dataBuku[i].aktif = false;
+                System.out.println("Data berhasil dihapus.");
+                return;
+            }
+        }
+
+        System.out.println("Data tidak ditemukan.");
+    }
+
+   static void cariBukuLin() {
+
+    System.out.println("\n=== MENCARI BUKU ===");
+    System.out.println("Masukan nama buku: ");
+    String cari = input.nextLine();
+
+    boolean ditemukan = false;
+
+    for (int i = 0; i < jumlahData; i++) {
+        if (dataBuku[i].aktif == true && mengandung(dataBuku[i].judul, cari)) {
+
+            System.out.println("\nBuku ditemukan:");
+                tampilHeader();
+                tampilBaris(dataBuku[i]);
+            ditemukan = true;
+        }
+    }
+
+    if (ditemukan == false) {
+        System.out.println("Buku tidak ditemukan.");
+    }
+}
+
+static boolean mengandung(String teks, String cari) {
+   
+    char[] arrTeks = new char[teks.length()];
+    char[] arrCari = new char[cari.length()];
+
+    for (int i = 0; i < teks.length(); i++) {
+        char c = teks.charAt(i);
+        if (c >= 'A' && c <= 'Z') {
+            arrTeks[i] = (char)(c + 32); 
+        } else {
+            arrTeks[i] = c;
+        }
+    }
+
+    for (int i = 0; i < cari.length(); i++) {
+        char c = cari.charAt(i);
+        if (c >= 'A' && c <= 'Z') {
+            arrCari[i] = (char)(c + 32);
+        } else {
+            arrCari[i] = c;
+        }
+    }
+
+    for (int i = 0; i <= arrTeks.length - arrCari.length; i++) {
+        boolean cocok = true;
+        for (int j = 0; j < arrCari.length; j++) {
+            if (arrTeks[i + j] != arrCari[j]) {
+                cocok = false;
+                break;
+            }
+        }
+        if (cocok) return true;
+    }
+
+    return false;
+}
+   static void cariBukubin() {  
+        System.out.println("\n=== CARI ID BUKU (BINARY SEARCH) ===");
+
+        System.out.print("Masukan ID Buku: ");
+        int cari = input.nextInt();
+
+        int awal = 0;
+        int akhir = jumlahData - 1;
+
+        boolean ditemukan = false;
+
+        while (awal <= akhir) {
+            int tengah = (awal + akhir) / 2;
+
+            if (dataBuku[tengah].id == cari &&
+                dataBuku[tengah].aktif == true) {
+                    System.out.println("\nBuku ditemukan");
+                    tampilHeader();
+                    tampilBaris(dataBuku[tengah]);
+                    ditemukan = true;
+                    break;
+                }else if (cari > dataBuku[tengah].id) {
+                    awal = tengah + 1;
+                }else {
+                    akhir = tengah - 1;
+            }
+        }
+
+        if (ditemukan == false) {
+        System.out.println("Buku tidak ditemukan");
+        }
+    }
