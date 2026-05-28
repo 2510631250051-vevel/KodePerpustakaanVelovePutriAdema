@@ -343,3 +343,179 @@ static boolean mengandung(String teks, String cari) {
         System.out.println("Buku tidak ditemukan");
         }
     }
+        static void cariKategori() {
+        System.out.println("\n=== CARI BUKU BERDASARKAN KATEGORI ===");
+
+        System.out.print("Masukan kategori buku: ");
+        String kategori = input.nextLine();
+        boolean ditemukan = false;
+
+    for (int i = 0; i < jumlahData; i++) {
+
+        if (dataBuku[i].aktif == true &&
+            kategoriSama(dataBuku[i].kategori, kategori)) {
+                System.out.println("\nBuku ditemukan");
+                tampilHeader();
+                tampilBaris(dataBuku[i]);
+                ditemukan = true;
+            }
+        }
+
+    if (ditemukan == false) {
+        System.out.println("Kategori buku tidak ditemukan");
+    }
+}
+
+    static boolean kategoriSama(String a, String b) {
+        if (a.length() != b.length()) return false;
+        for (int i = 0; i < a.length(); i++) {
+            char ca = a.charAt(i);
+            char cb = b.charAt(i);
+        if (ca >= 'A' && ca <= 'Z') ca = (char)(ca + 32);
+        if (cb >= 'A' && cb <= 'Z') cb = (char)(cb + 32);
+        if (ca != cb) return false;
+    }
+
+    return true;
+}
+    
+    static void bubbleSortid() {
+        System.out.println("\n=== SORTING BUKU (ID) ===");
+
+        for (int i = 0; i < jumlahData - 1; i++) {
+            for (int j = 0; j < jumlahData - i - 1; j++) {
+                if (dataBuku[j].id > dataBuku[j + 1].id) {
+
+                    Buku temp = dataBuku[j];
+                    dataBuku[j] = dataBuku[j + 1];
+                    dataBuku[j + 1] = temp;
+                }
+            }
+        }
+
+        tampilHeader();
+        for (int i = 0; i < jumlahData; i++) {
+            if (dataBuku[i].aktif == true) {
+                tampilBaris(dataBuku[i]);
+            }
+        }
+       System.out.println("=====================================================================================================");
+    }
+
+    static void selectionSortJudul() {
+        System.out.println("\n=== SORTING JUDUL BUKU A-Z ===");
+
+        for (int i = 0; i < jumlahData - 1; i++) {
+            int min = i;
+
+            for (int j = i + 1; j < jumlahData; j++) {
+
+                String judul1 = dataBuku[j].judul;
+                String judul2 = dataBuku[min].judul;
+                int panjang;
+
+                if (judul1.length() < judul2.length()) {
+                    panjang = judul1.length();
+                } else {
+                    panjang = judul2.length();
+                }
+
+                boolean lebihKecil = false;
+
+                for (int k = 0; k < panjang; k++) {
+                    char huruf1 = judul1.charAt(k);
+                    char huruf2 = judul2.charAt(k);
+
+                    if (huruf1 < huruf2) {
+                        lebihKecil = true;
+                        break;
+                    } else if (huruf1 > huruf2) {
+                        break;
+                    }
+                }
+
+                if (lebihKecil == true) {
+                    min = j;
+                }
+            }
+
+            Buku temp = dataBuku[i];
+            dataBuku[i] = dataBuku[min];
+            dataBuku[min] = temp;
+        }
+
+        System.out.println("\n=== BUKU SETELAH SORTING ===");
+        
+        tampilHeader();
+
+        for (int i = 0; i < jumlahData; i++) {
+            if (dataBuku[i].aktif == true) {
+                tampilBaris(dataBuku[i]);
+            }
+        }
+       System.out.println("=====================================================================================================");
+    }
+
+    static void bubbleSortStok() {
+        System.out.println("\n=== SORTING STOK BUKU DESCENDING ===");
+
+        for (int i = 0; i < jumlahData - 1; i++) {
+            for (int j = 0; j < jumlahData - i - 1; j++) {
+                if (dataBuku[j].stok < dataBuku[j + 1].stok) {
+                    Buku temp = dataBuku[j];
+                    dataBuku[j] = dataBuku[j + 1];
+                    dataBuku[j + 1] = temp;
+                }
+            }
+        }
+
+        System.out.println("\n=== BUKU SETELAH SORTING STOK DESC ===");
+        
+        tampilHeader();
+        
+        for (int i = 0; i < jumlahData; i++) {
+            if (dataBuku[i].aktif == true) {
+                tampilBaris(dataBuku[i]);
+            }
+        }
+       System.out.println("=====================================================================================================");
+    }
+    
+    static void updateStatus() {
+
+    System.out.println("\n=== UPDATE STATUS BUKU ===");
+
+    System.out.print("Masukkan ID Buku: ");
+    int id = input.nextInt();
+    input.nextLine();
+
+    for (int i = 0; i < jumlahData; i++) {
+
+        if (dataBuku[i].id == id && dataBuku[i].aktif == true) {
+
+            System.out.println("Status saat ini : " + dataBuku[i].status);
+
+            System.out.print("Masukkan status buku baru (Tersedia/Dipinjam): ");
+            dataBuku[i].status = input.nextLine();
+
+        if (statusSama(dataBuku[i].status, "Dipinjam")) {
+                if (dataBuku[i].stok > 0) {
+                    dataBuku[i].stok--;
+                    System.out.println("Stok berkurang, sisa stok: " + dataBuku[i].stok);
+                } else {
+                    System.out.println("Stok habis, tidak bisa dipinjam.");
+                    dataBuku[i].status = "Tersedia";
+                }
+            } else if (statusSama(dataBuku[i].status, "Tersedia")) {
+                dataBuku[i].stok++;
+                System.out.println("Buku dikembalikan, stok bertambah: " + dataBuku[i].stok);
+            }
+
+            System.out.println("Status berhasil diupdate.");
+            return;
+        }
+    }
+
+    System.out.println("Buku tidak ditemukan.");
+}
+
