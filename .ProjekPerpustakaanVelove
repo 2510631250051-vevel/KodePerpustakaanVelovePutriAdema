@@ -518,4 +518,147 @@ static boolean mengandung(String teks, String cari) {
 
     System.out.println("Buku tidak ditemukan.");
 }
+        static void counterBuku() {
 
+    int totalAktif = 0;
+    int totalStok = 0;
+    int totalDipinjam = 0;
+
+    for (int i = 0; i < jumlahData; i++) {
+
+        if (dataBuku[i].aktif == true) {
+
+            totalAktif++;
+            totalStok += dataBuku[i].stok;
+
+            if (statusSama(dataBuku[i].status, "Dipinjam")) {
+                totalDipinjam++;
+            }
+        }
+    }
+
+    System.out.println("\n=== COUNTER BUKU ===");
+    System.out.println("Total Buku Aktif     : " + totalAktif);
+    System.out.println("Total Stok Tersedia  : " + totalStok);
+    System.out.println("Total Buku Dipinjam  : " + totalDipinjam);
+}
+
+    static void statistikData() {
+
+    int totalAktif = 0;
+    int totalStok = 0;
+    int totalDipinjam = 0;
+
+    for (int i = 0; i < jumlahData; i++) {
+
+        if (dataBuku[i].aktif == true) {
+
+            totalAktif++;
+            totalStok += dataBuku[i].stok;
+
+            if (statusSama(dataBuku[i].status, "Dipinjam")) {
+                totalDipinjam++;
+            }
+        }
+    }
+
+    double persenTersedia = 0;
+    double persenDipinjam = 0;
+
+    if (totalStok > 0) {
+        persenTersedia = (double) totalStok / (totalStok + totalDipinjam) * 100;
+        persenDipinjam = (double) totalDipinjam / (totalStok + totalDipinjam) * 100;
+    }
+
+    System.out.println("\n=== STATISTIK DATA BUKU ===");
+    System.out.println("Total Buku Aktif      : " + totalAktif);
+    System.out.println("Total Stok Tersedia   : " + totalStok);
+    System.out.println("Total Buku Dipinjam   : " + totalDipinjam);
+
+    System.out.printf("Persentase Tersedia   : %.2f%%\n", persenTersedia);
+    System.out.printf("Persentase Dipinjam   : %.2f%%\n", persenDipinjam);
+}
+
+     static boolean statusSama(String a, String b) { //statusSama untuk counterBuku dan statistik Data
+
+        if (a.length() != b.length()) return false;
+
+        for (int i = 0; i < a.length(); i++) {
+            char ca = a.charAt(i);
+            char cb = b.charAt(i);
+        if (ca >= 'A' && ca <= 'Z') ca = (char)(ca + 32);
+        if (cb >= 'A' && cb <= 'Z') cb = (char)(cb + 32);
+        if (ca != cb) return false;
+    }
+
+    return true;
+}
+ 
+    static void saveData() {
+
+     try {
+
+        FileWriter fw = new FileWriter("dataBuku.txt");
+
+        for (int i = 0; i < jumlahData; i++) {
+
+            if (dataBuku[i].aktif == true) {
+
+                fw.write(
+                    dataBuku[i].id + ";" +
+                    dataBuku[i].judul + ";" +
+                    dataBuku[i].kategori + ";" +
+                    dataBuku[i].stok + ";" +
+                    dataBuku[i].status + "\n"
+                );
+            }
+        }
+
+        fw.close();
+
+        System.out.println("Data berhasil disimpan ke file.");
+
+    } catch (IOException e) {
+
+        System.out.println("Terjadi kesalahan saat menyimpan data.");
+    }
+}
+
+static void loadData() {
+
+    try {
+
+        File file = new File("dataBuku.txt");
+
+        Scanner bacaFile = new Scanner(file);
+
+        jumlahData = 0;
+
+        while (bacaFile.hasNextLine()) {
+
+            String data = bacaFile.nextLine();
+
+            String[] pecah = data.split(";");
+
+            int id = Integer.parseInt(pecah[0]);
+            String judul = pecah[1];
+            String kategori = pecah[2];
+            int stok = Integer.parseInt(pecah[3]);
+            String status = pecah[4];
+
+            dataBuku[jumlahData] = new Buku(id, judul, kategori, stok);
+            dataBuku[jumlahData].status = status;
+
+            jumlahData++;
+        }
+
+        bacaFile.close();
+
+        System.out.println("Data berhasil di-load dari file.");
+
+    } catch (FileNotFoundException e) {
+
+        System.out.println("File data tidak ditemukan.");
+    }
+}
+}
